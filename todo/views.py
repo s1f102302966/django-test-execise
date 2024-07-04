@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.utils.timezone import make_aware
 from django.utils.dateparse import parse_datetime
 from todo.models import Task
@@ -11,6 +11,7 @@ def index(request):
             due_at=make_aware(parse_datetime(request.POST['due_at']))
         )
         task.save()
+        return redirect('/')
 
     if request.GET.get('order') == 'due':
         tasks = Task.objects.order_by('due_at')
